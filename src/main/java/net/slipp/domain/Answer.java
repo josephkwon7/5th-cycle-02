@@ -11,8 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
-import net.slipp.web.Question;
-
 @Entity
 public class Answer {
 	@Id

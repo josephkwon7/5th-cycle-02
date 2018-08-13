@@ -1,4 +1,4 @@
-package net.slipp.web;
+package net.slipp.domain;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -14,13 +15,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
-import net.slipp.domain.Answer;
-import net.slipp.domain.User;
-
 @Entity
 public class Question {
 	@Id
-	@GeneratedValue
+	//strategy added to address org.h2.jdbc.JdbcSQLException: Unique index or primary key violation: "PRIMARY KEY ON PUBLIC.QUESTION(ID)";
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@ManyToOne
