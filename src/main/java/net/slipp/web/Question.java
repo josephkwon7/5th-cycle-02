@@ -2,14 +2,19 @@ package net.slipp.web;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
+import net.slipp.domain.Answer;
 import net.slipp.domain.User;
 
 @Entity
@@ -24,9 +29,14 @@ public class Question {
 	
 	private String title;
 	
+	@Lob
 	private String content;
 	
 	private LocalDateTime createDate;
+	
+	@OneToMany(mappedBy = "question")
+	@OrderBy("id ASC")
+	private List<Answer> answers;
 	
 	public Question() {} //JPA requires this default constructor
 
@@ -45,6 +55,15 @@ public class Question {
 		return createDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
 	}
 
+	public void update(String title, String content) {
+		this.title = title;
+		this.content = content;
+	}
+
+	public boolean isSameWriter(User loginUser) {
+		return this.writer.equals(loginUser);
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -61,13 +80,8 @@ public class Question {
 		return content;
 	}
 
-	public LocalDateTime getCreateDate() {
-		return createDate;
-	}
-
-	public void update(String title, String content) {
-		this.title = title;
-		this.content = content;
+	public List<Answer> getAnswers() {
+		return answers;
 	}
 	
 }
