@@ -1,8 +1,16 @@
 package net.slipp.web;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import net.slipp.domain.User;
 
 @Entity
 public class Question {
@@ -10,18 +18,31 @@ public class Question {
 	@GeneratedValue
 	private Long id;
 	
-	private String writer;
+	@ManyToOne
+	@JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
+	private User writer;
 	
 	private String title;
 	
 	private String content;
 	
+	private LocalDateTime createDate;
+	
 	public Question() {} //JPA requires this default constructor
 
-	public Question(String writer, String title, String content) {
+	public Question(User writer, String title, String content) {
 		this.writer = writer;
 		this.title = title;
 		this.content = content;
+		this.createDate = LocalDateTime.now();
+	}
+	
+	//this method is NOT necessary spring-boot 2.x handles it's format automatically
+	public String getFormattedCreateDate() {
+		if (createDate == null) {
+			return "";
+		}
+		return createDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
 	}
 	
 }

@@ -48,6 +48,10 @@ public class User {
 		return newId.equals(id);
 	}
 	
+	public Long getId() {
+		return id;
+	}
+
 	public String getUserId() {
 		return userId;
 	}
@@ -59,7 +63,7 @@ public class User {
 	public String getEmail() {
 		return email;
 	}
-
+	
 	public void update(User updatedUser) {
 		this.password = updatedUser.password;
 		this.name = updatedUser.name;
@@ -68,8 +72,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
+		return "User [id=" + id + ", userId=" + userId + ", password=" + password + ", name=" + name + ", email="
+				+ email + "]";
 	}
-
 
 }

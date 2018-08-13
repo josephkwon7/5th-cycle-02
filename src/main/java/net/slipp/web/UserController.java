@@ -82,6 +82,7 @@ public class UserController {
 		}
 		
 		User user = userRepository.getOne(id);
+		System.out.println("user : " + user);
 		model.addAttribute("user", user);
 		return "/user/updateForm";
 	}
